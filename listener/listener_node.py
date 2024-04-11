@@ -15,13 +15,13 @@ class Listener(Node):
             self.imu_callback,
             10)
         
-        self.color_cameraInfo = self.create_subscription(
+        self.color_cameraInfo_sub = self.create_subscription(
             CameraInfo,
             '/camera/color/camera_info',
             self.color_cameraInfo_callback,
             10)
         
-        self.depth_cameraInfo = self.create_subscription(
+        self.depth_cameraInfo_sub = self.create_subscription(
             CameraInfo,
             '/camera/depth/camera_info',
             self.depth_cameraInfo_callback,
@@ -72,24 +72,24 @@ class Listener(Node):
         self.bridge = CvBridge()
 
     def imu_callback(self, data):
-        pass
+        return
     def color_cameraInfo_callback(self, data):
-        pass
+        return
     def depth_cameraInfo_callback(self, data):
-        pass
+        return
     def color_callback(self, data):
-        pass
+        return
     def depth_callback(self, data):
-        pass
+        return
     def aligned_depth_callback(self, data):
-        pass
+        return
     def compr_color_callback(self, data):
-        pass
+        return
     def compr_depth_callback(self, data):
-        pass
+        return
     
     def compr_aligned_depth_callback(self, data):
-        pass
+        return
 
 
 def main(args=None):
