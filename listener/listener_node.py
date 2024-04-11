@@ -72,24 +72,24 @@ class Listener(Node):
         self.bridge = CvBridge()
 
     def imu_callback(self, data):
-        return
+        pass
     def color_cameraInfo_callback(self, data):
-        return
+        pass
     def depth_cameraInfo_callback(self, data):
-        return
+        pass
     def color_callback(self, data):
-        return
+        pass
     def depth_callback(self, data):
-        return
+        pass
     def aligned_depth_callback(self, data):
-        return
+        pass
     def compr_color_callback(self, data):
-        return
+        pass
     def compr_depth_callback(self, data):
-        return
+        pass
     
     def compr_aligned_depth_callback(self, data):
-        return
+        pass
 
 
 def main(args=None):
