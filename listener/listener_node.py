@@ -106,7 +106,7 @@
 
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile, qos_profile_sensor_data
+from rclpy.qos import QoSProfile, qos_profile_sensor_data, QoSReliabilityPolicy
 from sensor_msgs.msg import Image, CompressedImage, CameraInfo, Imu
 
 class Listener(Node):
@@ -114,37 +114,39 @@ class Listener(Node):
         super().__init__('listener_node')
 
         # QoS Profile for Camera Info might not need to be as robust as image data
-        camera_info_qos = QoSProfile(depth=10, reliability=rclpy.qos.QoSReliabilityPolicy.RELIABLE)
+        camera_info_qos = QoSProfile(depth=10, reliability=QoSReliabilityPolicy.RELIABLE)
 
         # More robust QoS for high-frequency image data
-        image_data_qos = QoSProfile(depth=10, reliability=rclpy.qos.QoSReliabilityPolicy.RELIABLE)
+        image_data_qos = QoSProfile(depth=10, reliability=QoSReliabilityPolicy.RELIABLE)
+
+        aligned_depth_qos = QoSProfile(depth=10, reliability=QoSReliabilityPolicy.RELIABLE)
 
 
-        self.imu_subscription = self.create_subscription(
-             Imu,
-             '/camera/imu',
-             self.imu_callback,
-             qos_profile= qos_profile_sensor_data)
+        # self.imu_subscription = self.create_subscription(
+        #      Imu,
+        #      '/camera/imu',
+        #      self.imu_callback,
+        #      qos_profile= qos_profile_sensor_data)
 
-        # Subscriptions to camera info topics
-        self.color_cameraInfo_sub = self.create_subscription(
-            CameraInfo,
-            '/camera/color/camera_info',
-            self.color_cameraInfo_callback,
-            camera_info_qos)
+        # # Subscriptions to camera info topics
+        # self.color_cameraInfo_sub = self.create_subscription(
+        #     CameraInfo,
+        #     '/camera/color/camera_info',
+        #     self.color_cameraInfo_callback,
+        #     camera_info_qos)
         
-        self.depth_cameraInfo_sub = self.create_subscription(
-            CameraInfo,
-            '/camera/depth/camera_info',
-            self.depth_cameraInfo_callback,
-            camera_info_qos)
+        # self.depth_cameraInfo_sub = self.create_subscription(
+        #     CameraInfo,
+        #     '/camera/depth/camera_info',
+        #     self.depth_cameraInfo_callback,
+        #     camera_info_qos)
 
-        # Subscriptions to uncompressed image topics
-        self.color_subscription = self.create_subscription(
-            Image,
-            '/camera/color/image_raw',
-            self.color_callback,
-            image_data_qos)
+        # # Subscriptions to uncompressed image topics
+        # self.color_subscription = self.create_subscription(
+        #     Image,
+        #     '/camera/color/image_raw',
+        #     self.color_callback,
+        #     image_data_qos)
         
         # self.depth_subscription = self.create_subscription(
         #     Image,
@@ -156,14 +158,14 @@ class Listener(Node):
             Image,
             '/camera/aligned_depth_to_color/image_raw',
             self.aligned_depth_callback,
-            image_data_qos)
+            aligned_depth_qos)
 
         # Subscriptions to compressed image topics
-        self.compr_color_subscription = self.create_subscription(
-            CompressedImage,
-            '/camera/color/image_raw/compressed',
-            self.compr_color_callback,
-            image_data_qos)
+        # self.compr_color_subscription = self.create_subscription(
+        #     CompressedImage,
+        #     '/camera/color/image_raw/compressed',
+        #     self.compr_color_callback,
+        #     image_data_qos)
         
         # self.compr_depth_subscription = self.create_subscription(
         #     CompressedImage,
@@ -175,9 +177,12 @@ class Listener(Node):
             CompressedImage,
             '/camera/aligned_depth_to_color/image_raw/compressedDepth',
             self.compr_aligned_depth_callback,
-            image_data_qos)
+            aligned_depth_qos)
 
     # Callback functions for each subscription
+
+    def imu_callback(self, msg):
+        pass
     def color_cameraInfo_callback(self, msg):
         pass
     
