@@ -106,8 +106,8 @@
 
 import rclpy
 from rclpy.node import Node
-from rclpy.qos import QoSProfile
-from sensor_msgs.msg import Image, CompressedImage, CameraInfo
+from rclpy.qos import QoSProfile, qos_profile_sensor_data
+from sensor_msgs.msg import Image, CompressedImage, CameraInfo, Imu
 
 class Listener(Node):
     def __init__(self):
@@ -118,6 +118,13 @@ class Listener(Node):
 
         # More robust QoS for high-frequency image data
         image_data_qos = QoSProfile(depth=10, reliability=rclpy.qos.QoSReliabilityPolicy.RELIABLE)
+
+
+        self.imu_subscription = self.create_subscription(
+             Imu,
+             '/camera/imu',
+             self.imu_callback,
+             qos_profile= qos_profile_sensor_data)
 
         # Subscriptions to camera info topics
         self.color_cameraInfo_sub = self.create_subscription(
@@ -139,11 +146,11 @@ class Listener(Node):
             self.color_callback,
             image_data_qos)
         
-        self.depth_subscription = self.create_subscription(
-            Image,
-            '/camera/depth/image_rect_raw',
-            self.depth_callback,
-            image_data_qos)
+        # self.depth_subscription = self.create_subscription(
+        #     Image,
+        #     '/camera/depth/image_rect_raw',
+        #     self.depth_callback,
+        #     image_data_qos)
         
         self.aligned_depth_subscription = self.create_subscription(
             Image,
@@ -158,11 +165,11 @@ class Listener(Node):
             self.compr_color_callback,
             image_data_qos)
         
-        self.compr_depth_subscription = self.create_subscription(
-            CompressedImage,
-            '/camera/depth/image_rect_raw/compressedDepth',
-            self.compr_depth_callback,
-            image_data_qos)
+        # self.compr_depth_subscription = self.create_subscription(
+        #     CompressedImage,
+        #     '/camera/depth/image_rect_raw/compressedDepth',
+        #     self.compr_depth_callback,
+        #     image_data_qos)
         
         self.compr_aligned_depth_subscription = self.create_subscription(
             CompressedImage,
