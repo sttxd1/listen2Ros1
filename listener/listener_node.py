@@ -150,11 +150,11 @@ class Listener(Node):
             self.color_callback,
             image_data_qos)
         
-        self.depth_subscription = self.create_subscription(
-            Image,
-            '/camera/depth/image_rect_raw',
-            self.depth_callback,
-            image_data_qos)
+        # self.depth_subscription = self.create_subscription(
+        #     Image,
+        #     '/camera/depth/image_rect_raw',
+        #     self.depth_callback,
+        #     image_data_qos)
         
         self.aligned_depth_subscription = self.create_subscription(
             Image,
@@ -169,11 +169,11 @@ class Listener(Node):
             self.compr_color_callback,
             image_data_qos)
         
-        self.compr_depth_subscription = self.create_subscription(
-            CompressedImage,
-            '/camera/depth/image_rect_raw/compressedDepth',
-            self.compr_depth_callback,
-            image_data_qos)
+        # self.compr_depth_subscription = self.create_subscription(
+        #     CompressedImage,
+        #     '/camera/depth/image_rect_raw/compressedDepth',
+        #     self.compr_depth_callback,
+        #     image_data_qos)
         
         self.compr_aligned_depth_subscription = self.create_subscription(
             CompressedImage,
@@ -194,8 +194,8 @@ class Listener(Node):
     def color_callback(self, msg):
         pass
     
-    def depth_callback(self, msg):
-        pass
+    # def depth_callback(self, msg):
+    #     pass
     
     def aligned_depth_callback(self, msg):
         pass
@@ -203,8 +203,8 @@ class Listener(Node):
     def compr_color_callback(self, msg):
         pass
     
-    def compr_depth_callback(self, msg):
-        pass
+    # def compr_depth_callback(self, msg):
+    #     pass
     
     def compr_aligned_depth_callback(self, msg):
         return
